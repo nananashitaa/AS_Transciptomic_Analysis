@@ -248,6 +248,35 @@ main = 'Top 50 Differentially Expressed Genes of Ankylosing Spondylitis'
 )
 
 
+#######Analisis Gene Ontology (GO)
+BiocManager::install(c('clusterProfiler', 'org.Hs.eg.db'))
+library(clusterProfiler)
+library(org.Hs.eg.db)
+
+genes_to_test <- topTableResults$SYMBOL[1:50]
+
+go_results <- enrichGO(gene = genes_to_test, 
+OrgDb = org.Hs.eg.db,
+keyType = 'SYMBOL',
+ont = 'BP',
+pAdjustMethod = 'BH',
+pvalueCutoff = 0.5)
+
+dotplot(go_results, showCategory = 10) + 
+ggtitle('GO Biological Process')
+
+
+#######Analisis KEGG Pathways
+entrez_ids <- bitr(genes_to_test,
+fromType = 'SYMBOL',
+toType = 'ENTREZID',
+OrgDb = 'org.Hs.eg.db')
+kegg_results <- enrichKEGG(gene = entrez_ids$ENTREZID, organism = 'hsa')
+
+dotplot(kegg_results, showCategory = 10) +
+ggtitle('KEGG Pathways')
+
+
 #######Save the results
 write.csv(topTableResults, 'Results_GSE25101_DEG.csv')
 message('Analysis complete. The result file has been saved.')
