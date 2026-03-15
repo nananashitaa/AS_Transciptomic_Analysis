@@ -5,7 +5,7 @@ Analysis of Ankylosing Spondylitis using public GEO datasets analyzed with the R
 This study aims to identify significantly genes that may contribute to the molecular mechanisms underlying AS, especially using the R programming language
 
 # Repository Structure
-- hasil visualisasi : summary of the analysis flow
+- hasil visualisasi : analysis results in the form of images
 - report : final analysis report
 - script R : scripts used in R
 
